@@ -57,7 +57,7 @@ salmax_coords = np.zeros((2,), dtype=np.int32)
 net_attention = initialise_attention(device, config.ATTENTION_PARAMS)
 
 # Time-window parameters
-window_period = 2  # ms per window
+window_period = 1  # ms per window
 current_time  = window_period
 window_tensor = torch.zeros((1, height, width), dtype=torch.float32)
 

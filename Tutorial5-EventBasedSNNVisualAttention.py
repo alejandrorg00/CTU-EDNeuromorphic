@@ -55,7 +55,7 @@ device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 config = Config()
 
 # Load event data from a .npy file containing two objects
-data = np.load('data/twoobjects/cofeecup_1000fps.npy')
+data = np.load('data/twoobjects/twoobjects.npy')
 ###
 #x = data[:,0]   # x coordinates
 #y = data[:,1]   # y coordinates
@@ -68,7 +68,7 @@ x, y, p, t = data[:, 0].astype(int), data[:, 1].astype(int), data[:, 2], data[:,
 # Determine the resolution based on the maximum coordinates
 max_x = x.max() + 1  # Maximum x coordinate + 1 for resolution
 max_y = y.max() + 1  # Maximum y coordinate + 1 for resolution
-resolution = (max_y, max_x)  # Resolution tuple for attention processing
+resolution = (int(max_y), int(max_x))  # Resolution tuple for attention processing
 
 # Initialize saliency map and coordinates for maximum saliency
 saliency_map = np.zeros((max_y, max_x), dtype=np.float32)  # Saliency map initialized to zero
@@ -79,7 +79,7 @@ salmax_coords = np.zeros((2,), dtype=np.int32)  # Array to hold coordinates of m
 net_attention = initialise_attention(device, config.ATTENTION_PARAMS)
 
 # Set the time window period for processing events (in milliseconds)
-window_period = 5  # Time window in milliseconds
+window_period = 100  # Time window in milliseconds
 time = window_period  # Initialize the time variable
 window = torch.zeros((1, max_y, max_x), dtype=torch.float32)  # Create a tensor to hold the current window of events
 
